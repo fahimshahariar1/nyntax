@@ -1,11 +1,11 @@
-class carModel {
+class CarModel {
   String? status;
   List<Data>? data;
   String? message;
 
-  carModel({this.status, this.data, this.message});
+  CarModel({this.status, this.data, this.message});
 
-  carModel.fromJson(Map<String, dynamic> json) {
+  CarModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
       data = <Data>[];

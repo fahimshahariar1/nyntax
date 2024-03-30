@@ -1,11 +1,17 @@
+// Additional.dart
+
 import 'package:flutter/material.dart';
+import 'package:nyntaxenvoicapp/data/model/car_model.dart';
+import 'package:nyntaxenvoicapp/screens/invoice/invoice.dart';
 import 'package:nyntaxenvoicapp/util/colors.dart';
 import 'package:nyntaxenvoicapp/util/dimensions.dart';
 import 'package:nyntaxenvoicapp/util/images.dart';
 import 'package:nyntaxenvoicapp/util/styles.dart';
 
 class Additional extends StatefulWidget {
-  const Additional({Key? key}) : super(key: key);
+  final Data selectedVehicle;
+
+  const Additional({Key? key, required this.selectedVehicle}) : super(key: key);
 
   @override
   State<Additional> createState() => _AdditionalState();
@@ -19,14 +25,17 @@ class _AdditionalState extends State<Additional> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Back", style: poppinsMedium),
+      ),
       body: Container(
-        padding: EdgeInsets.only(top: Dimensions.paddingSizeLarge, left: Dimensions.paddingSizeDefault),
+        padding: EdgeInsets.only(top: Dimensions.paddingSizeSmall, left: Dimensions.paddingSizeDefault),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("Additional Charges", style: poppinsSemiBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
             Container(height: 2, width: 350, color: AppColors.primaryColor),
-            SizedBox(height: 20,),
+            SizedBox(height: 20),
             Container(
               height: 450,
               width: 350,
@@ -35,7 +44,6 @@ class _AdditionalState extends State<Additional> {
                 borderRadius: BorderRadius.circular(5),
               ),
               child: Column(
-
                 children: [
                   CheckboxListTile(
                     contentPadding: EdgeInsets.only(right: 10),
@@ -44,11 +52,10 @@ class _AdditionalState extends State<Additional> {
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Collision Damage Waiver', style: poppinsMedium,),
-                        Text('\$9.00', style: poppinsMedium,),
+                        Text('Collision Damage Waiver', style: poppinsMedium),
+                        Text('\$9.00', style: poppinsMedium),
                       ],
                     ),
-
                     onChanged: (bool? value) {
                       setState(() {
                         collisionDamageWaiver = value;
@@ -61,8 +68,8 @@ class _AdditionalState extends State<Additional> {
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Liability Insurance', style: poppinsMedium,),
-                        Text('\$15.00', style: poppinsMedium,),
+                        Text('Liability Insurance', style: poppinsMedium),
+                        Text('\$15.00', style: poppinsMedium),
                       ],
                     ),
                     value: liabilityInsurance,
@@ -72,13 +79,14 @@ class _AdditionalState extends State<Additional> {
                       });
                     },
                   ),
-                  CheckboxListTile(controlAffinity: ListTileControlAffinity.leading,
+                  CheckboxListTile(
+                    controlAffinity: ListTileControlAffinity.leading,
                     contentPadding: EdgeInsets.only(right: 10),
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Rental Tax', style: poppinsMedium,),
-                        Text('11.5%', style: poppinsMedium,),
+                        Text('Rental Tax', style: poppinsMedium),
+                        Text('11.5%', style: poppinsMedium),
                       ],
                     ),
                     value: rentalTax,
@@ -97,7 +105,18 @@ class _AdditionalState extends State<Additional> {
                 padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeLarge),
                 child: MaterialButton(
                   onPressed: () {
-                    // Handle Next button press
+                    // Navigate to the Invoice screen and pass selected vehicle data and additional charges
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Invoice(
+                          selectedVehicle: widget.selectedVehicle,
+                          collisionDamageWaiver: collisionDamageWaiver,
+                          liabilityInsurance: liabilityInsurance,
+                          rentalTax: rentalTax,
+                        ),
+                      ),
+                    );
                   },
                   child: Container(
                     height: 48,

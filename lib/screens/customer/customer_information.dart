@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:nyntaxenvoicapp/screens/invoice/invoice.dart';
 import 'package:nyntaxenvoicapp/screens/vehicle/vehicle_information.dart';
 import 'package:nyntaxenvoicapp/util/colors.dart';
 import 'package:nyntaxenvoicapp/util/dimensions.dart';
 import 'package:nyntaxenvoicapp/util/images.dart';
 import 'package:nyntaxenvoicapp/util/styles.dart';
 
-class Customer extends StatefulWidget {
-  const Customer({Key? key}) : super(key: key);
+class CustomerInformation extends StatefulWidget {
+  final DateTime pickupDate;
+  final DateTime returnDate;
+
+  const CustomerInformation({
+    Key? key,
+    required this.pickupDate,
+    required this.returnDate,
+  }) : super(key: key);
 
   @override
-  State<Customer> createState() => _CustomerState();
+  State<CustomerInformation> createState() => _CustomerInformationState();
 }
 
-class _CustomerState extends State<Customer> {
+class _CustomerInformationState extends State<CustomerInformation> {
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -48,23 +56,24 @@ class _CustomerState extends State<Customer> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: Text("Back", style: poppinsMedium,),
+          title: Text("Back", style: poppinsMedium),
         ),
-        body: Container(padding: EdgeInsets.only(left: Dimensions.paddingSizeDefault),
+        body: Container(
+          padding: EdgeInsets.only(left: Dimensions.paddingSizeDefault),
           child: Form(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("Customer Information", style: poppinsSemiBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
-
                 Container(height: 2, width: 350, color: AppColors.primaryColor),
-
                 SizedBox(height: 20,),
-
-                Container(height: 450, width: 350, decoration: BoxDecoration(border: Border.all(color: AppColors.boxColor),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-
+                Container(
+                  height: 450,
+                  width: 350,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.boxColor),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault, top: Dimensions.paddingSizeDefault),
                     child: Column(
@@ -168,17 +177,27 @@ class _CustomerState extends State<Customer> {
                       ],
                     ),
                   ),
-
                 ),
                 Spacer(),
-
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeLarge),
                     child: MaterialButton(
                       onPressed: isNextButtonEnabled
                           ? () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Vehicle()));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Invoice(
+                              pickupDate: widget.pickupDate,
+                              returnDate: widget.returnDate,
+                              firstName: firstNameController.text,
+                              lastName: lastNameController.text,
+                              email: emailController.text,
+                              phone: phoneController.text,
+                            ),
+                          ),
+                        );
                       }
                           : null,
                       child: Container(height: 48, width: 175,
@@ -187,7 +206,6 @@ class _CustomerState extends State<Customer> {
                     ),
                   ),
                 )
-
               ],
             ),
           ),

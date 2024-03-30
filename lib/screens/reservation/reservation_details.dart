@@ -212,16 +212,25 @@ class _ReservationState extends State<Reservation> {
                 padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeLarge),
                 child: MaterialButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Customer()));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Customer(
+                          pickupDate: pickupDate,
+                          returnDate: returnDate,
+                        ),
+                      ),
+                    );
                   },
                   child: Container(
-                      height: 48,
-                      width: 175,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: AppColors.primaryColor,
-                      ),
-                      child: Center(child: Text("Next", style: poppinsMedium.copyWith(color: Colors.white),))),
+                    height: 48,
+                    width: 175,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: AppColors.primaryColor,
+                    ),
+                    child: Center(child: Text("Next", style: poppinsMedium.copyWith(color: Colors.white))),
+                  ),
                 ),
               ),
             ),
