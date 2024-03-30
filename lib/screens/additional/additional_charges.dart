@@ -1,134 +1,106 @@
-// Additional.dart
-
 import 'package:flutter/material.dart';
-import 'package:nyntaxenvoicapp/data/model/car_model.dart';
+
 import 'package:nyntaxenvoicapp/screens/invoice/invoice.dart';
-import 'package:nyntaxenvoicapp/util/colors.dart';
+
 import 'package:nyntaxenvoicapp/util/dimensions.dart';
-import 'package:nyntaxenvoicapp/util/images.dart';
 import 'package:nyntaxenvoicapp/util/styles.dart';
 
-class Additional extends StatefulWidget {
-  final Data selectedVehicle;
+class AdditionalCharges extends StatefulWidget {
+  final String reservationID;
+  final DateTime pickupDate;
+  final DateTime returnDate;
+  final String firstName;
+  final String lastName;
+  final String email;
+  final String phone;
+  final String vehicleType;
+  final String vehicleModel;
 
-  const Additional({Key? key, required this.selectedVehicle}) : super(key: key);
+  const AdditionalCharges({
+    Key? key,
+    required this.reservationID,
+    required this.pickupDate,
+    required this.returnDate,
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.phone,
+    required this.vehicleType,
+    required this.vehicleModel,
+  }) : super(key: key);
 
   @override
-  State<Additional> createState() => _AdditionalState();
+  State<AdditionalCharges> createState() => _AdditionalChargesState();
 }
 
-class _AdditionalState extends State<Additional> {
-  bool? collisionDamageWaiver = false;
-  bool? liabilityInsurance = false;
-  bool? rentalTax = false;
+class _AdditionalChargesState extends State<AdditionalCharges> {
+  double weeklyCharge = 250.00;
+  double dailyCharge = 140.00;
+  double collisionDamageWaiver = 9.00;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Back", style: poppinsMedium),
+        title: Text("Additional Charges", style: poppinsMedium),
       ),
-      body: Container(
-        padding: EdgeInsets.only(top: Dimensions.paddingSizeSmall, left: Dimensions.paddingSizeDefault),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(Dimensions.paddingSizeDefault),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Additional Charges", style: poppinsSemiBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
-            Container(height: 2, width: 350, color: AppColors.primaryColor),
+            Text("Additional Charges", style: poppinsMedium),
             SizedBox(height: 20),
-            Container(
-              height: 450,
-              width: 350,
-              decoration: BoxDecoration(
-                border: Border.all(color: AppColors.boxColor),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Column(
-                children: [
-                  CheckboxListTile(
-                    contentPadding: EdgeInsets.only(right: 10),
-                    controlAffinity: ListTileControlAffinity.leading,
-                    value: collisionDamageWaiver,
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Collision Damage Waiver', style: poppinsMedium),
-                        Text('\$9.00', style: poppinsMedium),
-                      ],
-                    ),
-                    onChanged: (bool? value) {
-                      setState(() {
-                        collisionDamageWaiver = value;
-                      });
-                    },
-                  ),
-                  CheckboxListTile(
-                    controlAffinity: ListTileControlAffinity.leading,
-                    contentPadding: EdgeInsets.only(right: 10),
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Liability Insurance', style: poppinsMedium),
-                        Text('\$15.00', style: poppinsMedium),
-                      ],
-                    ),
-                    value: liabilityInsurance,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        liabilityInsurance = value;
-                      });
-                    },
-                  ),
-                  CheckboxListTile(
-                    controlAffinity: ListTileControlAffinity.leading,
-                    contentPadding: EdgeInsets.only(right: 10),
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Rental Tax', style: poppinsMedium),
-                        Text('11.5%', style: poppinsMedium),
-                      ],
-                    ),
-                    value: rentalTax,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        rentalTax = value;
-                      });
-                    },
-                  ),
-                ],
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Weekly (1 week)", style: poppinsMedium),
+                Text("\$${weeklyCharge.toStringAsFixed(2)}",
+                    style: poppinsMedium),
+              ],
             ),
-            Spacer(),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeLarge),
-                child: MaterialButton(
-                  onPressed: () {
-                    // Navigate to the Invoice screen and pass selected vehicle data and additional charges
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Invoice(
-                          selectedVehicle: widget.selectedVehicle,
-                          collisionDamageWaiver: collisionDamageWaiver,
-                          liabilityInsurance: liabilityInsurance,
-                          rentalTax: rentalTax,
-                        ),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    height: 48,
-                    width: 175,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: AppColors.primaryColor,
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Daily (2 Days)", style: poppinsMedium),
+                Text("\$${dailyCharge.toStringAsFixed(2)}",
+                    style: poppinsMedium),
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Collision Damage Waiver", style: poppinsMedium),
+                Text("\$${collisionDamageWaiver.toStringAsFixed(2)}",
+                    style: poppinsMedium),
+              ],
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                double netTotal =
+                    weeklyCharge + dailyCharge + collisionDamageWaiver;
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Invoice(
+                      reservationID: widget.reservationID,
+                      pickupDate: widget.pickupDate,
+                      returnDate: widget.returnDate,
+                      firstName: widget.firstName,
+                      lastName: widget.lastName,
+                      email: widget.email,
+                      phone: widget.phone,
+                      vehicleType: widget.vehicleType,
+                      vehicleModel: widget.vehicleModel,
+                      netTotal: netTotal,
                     ),
-                    child: Center(child: Text("Next", style: poppinsMedium.copyWith(color: Colors.white))),
                   ),
-                ),
-              ),
+                );
+              },
+              child: Text("Next"),
             ),
           ],
         ),

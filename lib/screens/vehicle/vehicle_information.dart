@@ -229,13 +229,21 @@ class _VehicleState extends State<Vehicle> {
                     bottom: Dimensions.paddingSizeLarge),
                 child: MaterialButton(
                   onPressed: () {
-                    // Navigate to the Additional screen and pass selected vehicle data
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Additional(
-                            selectedVehicle: _vehicles.firstWhere((vehicle) =>
-                            vehicle.id == _selectedVehicleType)),
+                        builder: (context) => AdditionalCharges(
+                          reservationID: widget.reservationID,
+                          pickupDate: widget.pickupDate,
+                          returnDate: widget.returnDate,
+                          firstName: widget.firstName,
+                          lastName: widget.lastName,
+                          email: widget.email,
+                          phone: widget.phone,
+                          vehicleType: vehicleType,
+                          vehicleModel: vehicleModel,
+                        ),
                       ),
                     );
                   },
