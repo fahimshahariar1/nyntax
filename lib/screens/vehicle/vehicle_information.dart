@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nyntaxenvoicapp/screens/additional/additional_charges.dart';
 import 'package:nyntaxenvoicapp/util/colors.dart';
 import 'package:nyntaxenvoicapp/util/dimensions.dart';
 import 'package:nyntaxenvoicapp/util/images.dart';
@@ -15,6 +16,7 @@ class _VehicleState extends State<Vehicle> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(padding: EdgeInsets.only(top: Dimensions.paddingSizeLarge, left: Dimensions.paddingSizeDefault),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,7 +59,7 @@ class _VehicleState extends State<Vehicle> {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: Dimensions.paddingSizeLarge),
                 child: MaterialButton(onPressed: (){
-
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Additional()));
                 },
                   child: Container(height: 48, width: 175,
                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: AppColors.primaryColor,),
